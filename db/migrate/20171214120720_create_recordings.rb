@@ -1,0 +1,8 @@
+class CreateRecordings < ActiveRecord::Migration[5.1]
+  def change
+    create_table :recordings, id: :serial do |t|
+      t.string :title, null: false
+      t.timestamps
+    end
+  end
+end
