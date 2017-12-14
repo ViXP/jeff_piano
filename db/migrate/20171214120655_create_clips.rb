@@ -5,6 +5,7 @@ class CreateClips < ActiveRecord::Migration[5.1]
       t.string :url, null: false
       t.bigint :duration, null: false
     end
+    
     add_index :clips, :number, unique: true
     add_index :clips, :url, unique: true
   end
