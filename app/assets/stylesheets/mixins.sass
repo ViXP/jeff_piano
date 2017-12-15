@@ -1,0 +1,10 @@
+// Additional mixins
+@mixin vertical-gradient($first, $second)
+  background-color: $first
+  background-image: -moz-linear-gradient(top, $first 0%, $second 100%)
+  background-image: -webkit-gradient(linear, top, bottom, color-stop(0%, $first), color-stop(100%, $second))
+  background-image: -webkit-linear-gradient(top, $first 0%, $second 100%)
+  background-image: -o-linear-gradient(top, $first 0%, $second 100%)
+  background: -ms-linear-gradient(top, $first 0%, $second 100%)
+  background: linear-gradient(to bottom, $first 0%, $second 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$first', endColorstr='$second', GradientType=1 )

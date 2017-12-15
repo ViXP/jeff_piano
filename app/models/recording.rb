@@ -5,4 +5,8 @@ class Recording < ApplicationRecord
 
   # Validations
   validates :title, presence: true, length: { minimum: 2 }
+
+  def duration
+    clips.last
+  end
 end

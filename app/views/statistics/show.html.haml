@@ -1,0 +1,25 @@
+%section.statistics
+  %h2 Statistics
+  %span
+    %strong Overall number of recordings saved:
+    = recordings_stats
+
+  %section#distribution_info
+    %h3 Videos distribution stats
+    - distribution_stats.each do |video|
+      %article.single_video
+        %h4.header= video['number']
+        .scale{ style: %{width: #{video['distribution']}%;} }= %{#{video['distribution']}%}
+
+  %span
+    %strong Average rate:
+    = average_rate
+
+  %article#recordings
+    %h3 Recordings list
+    = render partial: 'recordings/recording', collection: recordings
+
+  %article#clips
+    %h3 Clips
+    = link_to 'Add new clip', :new_clip
+    = render partial: 'clips/clip', collection: clips

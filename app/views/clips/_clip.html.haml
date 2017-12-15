@@ -1,0 +1,6 @@
+%div
+  = link_to clip.number, clip.url, {class: :number}
+  (URL: 
+  = link_to clip.url, clip.url, {class: :url}
+  )
+  = button_to 'Remove recording', clip_path(clip.id), method: :delete

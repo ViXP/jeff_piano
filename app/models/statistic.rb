@@ -16,7 +16,7 @@ class Statistic
     ).to_a
   end
 
-#  def self.average_rate_stats
-#
-#  end
+  def self.average_rate_stats
+    0
+  end
 end
