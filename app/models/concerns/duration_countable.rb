@@ -2,11 +2,11 @@ module DurationCountable
   extend ActiveSupport::Concern
 
   included do
-    default_scope { 
+    default_scope do
       joins(format(
         <<-SQL
           LEFT JOIN
-            (SELECT %{recording_clips}.recording_id, 
+            (SELECT %{recording_clips}.recording_id,
               (%{recording_clips}.start_time + %{clips}.duration) AS duration
             FROM %{recording_clips}
             INNER JOIN
@@ -22,8 +22,8 @@ module DurationCountable
         .gsub(/\s/, ' '), { recording_clips: RecordingClip.table_name,
           clips: Clip.table_name, recordings: Recording.table_name }
         )
-      ).select('*') 
-    }
+      ).select('*')
+    end
   end
 
   def duration

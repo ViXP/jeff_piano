@@ -20,7 +20,10 @@ class Clip < ApplicationRecord
   private
 
   def count_duration
+    return false if url.blank?
     count = (FFMPEG::Movie.new(url).duration * 1000).to_i
     self.duration = count.is_a?(Numeric) ? count : 0
+  rescue Errno::ENOENT
+    errors[:base] << 'Wrong url, or file format'
   end
 end
