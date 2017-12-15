@@ -12,7 +12,7 @@ class Clip < ApplicationRecord
   validates :number, :url, presence: true, uniqueness: true
   validates :number, numericality: { only_integer: true, greater_than: 0 }
   validates :url,
-    format: { with: /\A(http:\/\/|https:\/\/).*(.mp4|.avi|.mov)\z/i }
+            format: { with: %r{\A(http://|https://).*(.mp4|.avi|.mov)\z}i }
 
   # Callbacks
   after_validation :count_duration

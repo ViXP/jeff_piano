@@ -1,0 +1,7 @@
+AllCops:
+  TargetRubyVersion: 2.4.2
+  TargetRailsVersion: 5.0
+  DisplayStyleGuide: true
+  DisplayCopNames: true
+  StyleGuideBaseURL: https://github.com/bbatsov/ruby-style-guide
+  StyleGuideCopsOnly: true
