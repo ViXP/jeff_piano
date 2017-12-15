@@ -1,3 +1,8 @@
 %div
-  %strong.title= recording.title
+  %span
+    %strong Title:
+    = recording.title
+  %span
+    %strong Duration:
+    = "#{recording.duration}s"
   = button_to 'Remove recording', recording_path(recording.id), method: :delete
