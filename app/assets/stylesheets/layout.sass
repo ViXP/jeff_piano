@@ -76,7 +76,6 @@ main
   width: 100%
   min-height: calc(100% - 60px)
   margin: 0 auto
-  box-sizing: border-box
   background: lighten($color-5, 20%)
   box-shadow: 0px 0px 100px -5px rgba($color-2, .3)
 
@@ -93,17 +92,16 @@ form
     font-size: 0
     border: 1px solid lighten($color-5, 17%)
 
-    & input[type="text"]
-      max-width: 100%
-      width: 83%
-      height: 1.5rem
-      font: bold 1.2rem/1.5rem $font-family
-      color: $color-2
+input[type="text"]
+  max-width: 100%
+  width: 83%
+  height: 1.5rem
+  font: bold 1.2rem/1.5rem $font-family
+  color: $color-2
 
-    & label
-      box-sizing: border-box
-      font-size: 1.1rem
-      text-align: right
-      padding-right: 15px
-      display: inline-block
-      width: 15%
+label
+  font-size: 1.1rem
+  text-align: right
+  padding-right: 15px
+  display: inline-block
+  width: 15%

@@ -7,9 +7,9 @@ export default class RecordButton extends React.Component
     recording: PropTypes.bool.isRequired
 
   render: ->
-    <button onClick={@props.record}>
+    <button id="recording_button" onClick={@props.record}>
       {if @props.recording
-        'STOP'
+        '■ STOP'
       else
-        'RECORD'}
+        '● RECORD'}
     </button>
