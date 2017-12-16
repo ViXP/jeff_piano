@@ -1,4 +1,4 @@
-%section.statistics
+%section#statistics
   %h2 Statistics
   %span
     %strong Overall number of recordings saved:
@@ -9,7 +9,8 @@
     - distribution_stats.each do |video|
       %article.single_video
         %h4.header= video['number']
-        .scale{ style: %{width: #{video['distribution']}%;} }= %{#{video['distribution']}%}
+        .scale{ style: %{width: #{video['distribution']}%;} }
+          = %{#{video['distribution']}%}
 
   %span
     %strong Average rate

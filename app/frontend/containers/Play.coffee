@@ -37,7 +37,7 @@ export default class @Layout extends React.Component
     }
 
   render: ->
-    <div id="layout">
+    <div>
       <PageLoading loading={@state.clips.loading} />
       <div className="column left">
         <Video number={@state.currentClip.number}
