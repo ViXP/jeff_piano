@@ -1,0 +1,5 @@
+- if subject.errors.any?
+  %ul.alert
+    - subject.errors.full_messages.each do |message|
+      %li
+        = message

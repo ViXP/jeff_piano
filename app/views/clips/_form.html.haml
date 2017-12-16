@@ -1,8 +1,4 @@
-- if clip.errors.any?
-  %ul.alert
-    - clip.errors.full_messages.each do |message|
-      %li
-        = message
+= render 'partials/alerts', subject: clip
 
 = form_with(model: clip, local: true) do |f|
   %div
@@ -15,4 +11,3 @@
     = f.text_field :url, size: 100
   %center
     = f.submit
-  
