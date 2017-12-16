@@ -3,3 +3,17 @@
   margin: 10px
   padding: 20px 25px
   font: 2rem/1 $font-family
+
+  &:nth-child(odd)
+    background: $color-1
+    color: $color-5
+
+    &:hover
+      background: lighten($color-1, 5%)
+
+  &:nth-child(even)
+    background: $color-5
+    color: $color-1
+
+    &:hover
+      background: darken($color-5, 5%)
