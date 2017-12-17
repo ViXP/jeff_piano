@@ -9,4 +9,7 @@ class RecordingClip < ApplicationRecord
   # Validations
   validates :start_time, presence: true, numericality: { only_integer: true,
     greater_than: 0 }
+
+  # Scopes
+  default_scope { order(start_time: :asc) }
 end

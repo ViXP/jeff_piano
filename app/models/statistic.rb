@@ -17,6 +17,6 @@ class Statistic
   end
 
   def self.average_rate_stats
-    (Recording.sum(:duration).to_f / 1000 / Clip.count).round(2)
+    (Recording.with_duration.sum(:duration).to_f / 1000 / Clip.count).round(2)
   end
 end

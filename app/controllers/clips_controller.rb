@@ -1,4 +1,9 @@
 class ClipsController < ApplicationController
+  def index
+    render :index, locals: { clips: Clip.all },
+      status: :ok
+  end
+
   def new
     render :new, locals: { clip: Clip.new }
   end

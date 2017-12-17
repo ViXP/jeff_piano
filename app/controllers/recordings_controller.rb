@@ -1,30 +1,30 @@
 class RecordingsController < ApplicationController
-  before_action :set_recording, only: [:show, :destroy]
-
   def index
-    render json: Recording.all
+    render :index, locals: { recordings: Recording.all },
+      status: :ok
   end
 
   def show
-    if @recording
-      render json: @recording
+    recording = Recording.find_by_id(params[:id])
+    unless recording.nil?
+      render :show, locals: { recording: recording }, status: :ok
     else
-
+      head :not_found
     end
   end
 
   def create
     recording = Recording.new(recording_params)
-
     if recording.save
-      render json: recording, status: :created
+      render :show, locals: { recording: recording }, status: :created
     else
       render json: recording.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @recording.destroy
+    recording = Recording.find(params[:id])
+    if recording && recording.destroy
       flash[:notice] = 'Recording was successfully destroyed.'
     else
       flash[:alert] = 'Error occured'
@@ -34,11 +34,7 @@ class RecordingsController < ApplicationController
 
   private
 
-  def set_recording
-    @recording = Recording.find(params[:id])
-  end
-
   def recording_params
-    params.require(:recording).permit(:title)
+    params.require(:recording).permit(:title, :clips)
   end
 end

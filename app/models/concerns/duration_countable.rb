@@ -2,7 +2,7 @@ module DurationCountable
   extend ActiveSupport::Concern
 
   included do
-    default_scope do
+    scope :with_duration, lambda {
       joins(format(
         <<-SQL
           LEFT JOIN
@@ -23,7 +23,7 @@ module DurationCountable
           clips: Clip.table_name, recordings: Recording.table_name }
         )
       ).select('*')
-    end
+    }
   end
 
   def duration

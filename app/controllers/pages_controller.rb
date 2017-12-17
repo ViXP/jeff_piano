@@ -8,7 +8,7 @@ class PagesController < ApplicationController
       recordings_stats: Statistic.recordings_stats,
       distribution_stats: Statistic.distribution_stats,
       average_rate: Statistic.average_rate_stats,
-      recordings: Recording.all,
+      recordings: Recording.with_duration.all,
       clips: Clip.all
     }
   end

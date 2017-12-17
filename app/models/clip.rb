@@ -17,6 +17,9 @@ class Clip < ApplicationRecord
   # Callbacks
   after_validation :count_duration
 
+  # Scopes
+  default_scope { order(number: :asc) }
+
   private
 
   def count_duration

@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/ViXP/js-routes
+  revision: 2a061bddda63fdc5e7b0c45bae2c2168dd02aed2
+  specs:
+    js-routes (1.4.2)
+      railties (>= 3.2)
+      sprockets-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -86,9 +94,6 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
-    js-routes (1.4.2)
-      railties (>= 3.2)
-      sprockets-rails
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -154,7 +159,7 @@ GEM
     ruby_dep (1.5.0)
     ruby_parser (3.10.1)
       sexp_processor (~> 4.9)
-    sass (3.5.3)
+    sass (3.5.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -197,7 +202,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webpacker (3.1.1)
+    webpacker (3.2.0)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
@@ -215,7 +220,7 @@ DEPENDENCIES
   composite_primary_keys (~> 10.0)
   haml-rails
   jbuilder (~> 2.5)
-  js-routes
+  js-routes!
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)
   pry
