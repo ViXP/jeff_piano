@@ -15,11 +15,6 @@ export default class @Layout extends React.Component
     super(p)
     @timer = new Timer()
     @state = {
-      currentRecording: {
-        id: 0
-        clips: []
-        recording: false
-      }
       clips: {
         collection: {
           1: 'https://d15t3vksqnhdeh.cloudfront.net/videos/1.mp4'
@@ -36,7 +31,8 @@ export default class @Layout extends React.Component
     @_playback = {}
 
   componentWillMount: =>
-    @resetCurrentClip()
+    @resetCurrentClip()    
+    @resetCurrentRecording()
 
   render: ->
     <div>
@@ -110,6 +106,7 @@ export default class @Layout extends React.Component
         ]
       }
     })
+    @resetCurrentRecording()
     @resetCurrentClip()
 
   # Plays the sequence of clips
@@ -134,3 +131,6 @@ export default class @Layout extends React.Component
 
   resetCurrentClip: =>
     @setState({ currentClip: {number: 0, url: ''} })
+
+  resetCurrentRecording: =>
+    @setState({ currentRecording: { id: 0, clips: [], recording: false } })

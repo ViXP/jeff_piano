@@ -13,9 +13,9 @@ export default class Recording extends React.Component
 
   render: ->
     <div className="recording">
-      <strong>
+      <h4 className="title">
         {@props.recording.title}
-      </strong>
+      </h4>
       <button onClick={@sendClipsCollection}>
         PLAY
       </button>
