@@ -5,12 +5,12 @@ import Timer from 'lib/Timer'
 # Subcomponents
 import PageLoading from 'components/PageLoading'
 import Video from 'components/Video'
-import ClipButton from 'components/ClipButton'
+import ClipsButtons from 'components/ClipsButtons'
 import RecordingButton from 'components/RecordingButton'
 import RecordingForm from 'components/RecordingForm'
 import Recordings from 'components/Recordings'
 
-export default class @Layout extends React.Component
+export default class @Play extends React.Component
   constructor: (p) ->
     super(p)
     @timer = new Timer()
@@ -36,13 +36,10 @@ export default class @Layout extends React.Component
 
   render: ->
     <div>
-      <PageLoading loading={@state.clips.loading} />
       <div className="column left">
-        <Video number={@state.currentClip.number}
-          url={@state.currentClip.url} />
-          {for number, url of @state.clips.collection
-            <ClipButton number={parseInt(number)} key={number}
-              changeCurrent={@changeCurrent} />}
+        <Video currentClip={@state.currentClip} />
+        <ClipsButtons clips={@state.clips.collection}
+          changeCurrentClip={@changeCurrentClip} keyPressed={@keyPressed} />
       </div>
       <div className="column">
         <RecordingButton recording={@state.currentRecording.recording}
@@ -52,14 +49,21 @@ export default class @Layout extends React.Component
         <Recordings recordings={@state.recordings} 
           playRecording={@playRecording} />
       </div>
+      <PageLoading loading={@state.clips.loading} />
     </div>
 
   # Changes current clip
-  changeCurrent: (number) =>
+  changeCurrentClip: (number) =>
     @setState({
       currentClip: { number: number, url: @state.clips.collection[number] }
     })
     @appendClipToRecording(number)
+
+  # Keyboard key press handler
+  keyPressed: (event) =>
+    number = parseInt(event.key)
+    if !isNaN(number) && number < 10 && @state.clips.collection[number]
+      @changeCurrentClip(number)
 
   # Appends current clip with correct timing
   appendClipToRecording: (number) =>
@@ -115,6 +119,7 @@ export default class @Layout extends React.Component
     clips.sort((a, b) ->
       (a.startTime > b.startTime) ? 1 : (a.startTime == b.startTime) ? 0 : -1
     )
+    window.clips = clips
     @_playback = {
       timer: 0
       currentIndex: 0
@@ -130,7 +135,7 @@ export default class @Layout extends React.Component
     @_playback.timer += 1
 
   resetCurrentClip: =>
-    @setState({ currentClip: {number: 0, url: ''} })
+    @setState({ currentClip: null })
 
   resetCurrentRecording: =>
     @setState({ currentRecording: { id: 0, clips: [], recording: false } })

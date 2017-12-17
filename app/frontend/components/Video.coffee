@@ -5,8 +5,7 @@ import uuidv4 from 'uuid/v4'
 
 export default class Video extends React.Component
   @propTypes =
-    number: PropTypes.number.isRequired
-    url: PropTypes.string.isRequired
+    currentClip: PropTypes.object
 
   constructor: (p) ->
     super(p)
@@ -22,14 +21,19 @@ export default class Video extends React.Component
               type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
           </video>}
 
-      {if @props.number != 0
+      {if @props.currentClip
         <div id="number">
-          {@props.number}
+          {@props.currentClip.number}
         </div>}
     </div>
 
   componentWillReceiveProps: (props) =>
-    @setState(background: [...@state.background, {...props, key: uuidv4()}])
+    if props.currentClip
+      @setState(
+        background: [
+          ...@state.background, {...props.currentClip, key: uuidv4()}
+        ]
+      )
 
   removeElement: (event) =>
     id = parseInt(event.target.dataset.id)

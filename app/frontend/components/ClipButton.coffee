@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 export default class ClipButton extends React.Component
   @propTypes =
     number: PropTypes.number.isRequired
-    changeCurrent: PropTypes.func.isRequired
+    changeCurrentClip: PropTypes.func.isRequired
 
   render: ->
     <button className="clip_button" onClick={@passCurrent}>
@@ -13,4 +13,4 @@ export default class ClipButton extends React.Component
     </button>
 
   passCurrent: =>
-    @props.changeCurrent(@props.number)
+    @props.changeCurrentClip(@props.number)

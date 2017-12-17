@@ -16,7 +16,7 @@ export default class Recordings extends React.Component
   render: ->
     <section id="recordings">
       {if @props.recordings.loading
-        <div class="loading"></div>
+        <div className="loading"></div>
       else if @props.recordings.collection.length > 0
         <article>
           <h3>All Recordings</h3>
