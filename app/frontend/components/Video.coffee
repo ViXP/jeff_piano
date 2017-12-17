@@ -18,9 +18,10 @@ export default class Video extends React.Component
         <source src={@props.url} 
           type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
       </video>
-      <div id="number">
-        {@props.number}
-      </div>
+      {if @props.number != 0
+        <div id="number">
+          {@props.number}
+        </div>}
     </div>
 
   componentWillReceiveProps: (props) ->

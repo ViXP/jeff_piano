@@ -5,7 +5,7 @@ export default class Timer
     @_counting = null
 
   start: ->
-    @_counting = setInterval(@_increment, 10)
+    @_counting = setInterval(@_increment, 1)
 
   stop: ->
     clearInterval(@_counting)

@@ -29,7 +29,7 @@ export default class RecordingForm extends React.Component
     @setState({ title: event.target.value })
 
   saveRecordingWithTitle: =>
-    if @state.title.length > 2
+    if @state.title.length > 1
       @props.saveRecording(@state.title)
       @setState({ title: '' })
       @clearField()

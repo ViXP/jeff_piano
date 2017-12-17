@@ -8,17 +8,15 @@ import Video from 'components/Video'
 import ClipButton from 'components/ClipButton'
 import RecordingButton from 'components/RecordingButton'
 import RecordingForm from 'components/RecordingForm'
+import Recordings from 'components/Recordings'
 
 export default class @Layout extends React.Component
   constructor: (p) ->
     super(p)
     @timer = new Timer()
     @state = {
-      currentClip: {
-        number: 0
-        url: ''
-      }
       currentRecording: {
+        id: 0
         clips: []
         recording: false
       }
@@ -35,6 +33,10 @@ export default class @Layout extends React.Component
         loading: false
       }
     }
+    @_playback = {}
+
+  componentWillMount: =>
+    @resetCurrentClip()
 
   render: ->
     <div>
@@ -50,7 +52,9 @@ export default class @Layout extends React.Component
         <RecordingButton recording={@state.currentRecording.recording}
           record={@record} />
         <RecordingForm recording={@state.currentRecording}
-          saveRecording={@saveRecording}/>
+          saveRecording={@saveRecording} />
+        <Recordings recordings={@state.recordings} 
+          playRecording={@playRecording} />
       </div>
     </div>
 
@@ -72,22 +76,28 @@ export default class @Layout extends React.Component
       @setState({
         currentRecording: {
           ...@state.currentRecording,
-          clips: 
-            [...@state.currentRecording.clips, 
-            {number: number, startTime: time }]
+          clips: [
+            ...@state.currentRecording.clips, 
+            { 
+              number: number, 
+              startTime: time, 
+              url: @state.clips.collection[number]
+            }
+          ]
         }
       })
 
   # Operates the recording process
   record: =>
     if @state.currentRecording.recording
-      @setState({ currentRecording: 
-        { ...@state.currentRecording, recording: false } 
+      @setState({ 
+        currentRecording: { ...@state.currentRecording, recording: false } 
       })
       @timer.clear()
       # AND SAVE TO THE LOCAL STORAGE!
     else
       @setState({ currentRecording: { recording: true, clips: [] } })
+    @resetCurrentClip()
 
   # Saves the recording
   saveRecording: (title) =>
@@ -95,12 +105,32 @@ export default class @Layout extends React.Component
       recordings: {
         ...@state.recordings
         collection: [
-          { ...@state.currentRecording, title: title }
+          { ...@state.currentRecording, title: title, id: 0 }
           ...@state.recordings.collection
         ]
       }
-      currentRecording: {
-        recording: false
-        clips: []
-      }
     })
+    @resetCurrentClip()
+
+  # Plays the sequence of clips
+  playRecording: (clips) =>
+    clearInterval(@_playback.interval) if @_playback.interval
+    clips.sort((a, b) ->
+      (a.startTime > b.startTime) ? 1 : (a.startTime == b.startTime) ? 0 : -1
+    )
+    @_playback = {
+      timer: 0
+      currentIndex: 0
+      interval: setInterval(@checkClip.bind(this, clips), 1)
+    }
+
+  checkClip: (clips) ->
+    if @_playback.currentIndex >= clips.length
+      clearInterval(@_playback.interval)
+    else if clips[@_playback.currentIndex].startTime == @_playback.timer
+      @setState({ currentClip: clips[@_playback.currentIndex] })
+      @_playback.currentIndex += 1
+    @_playback.timer += 1
+
+  resetCurrentClip: =>
+    @setState({ currentClip: {number: 0, url: ''} })
