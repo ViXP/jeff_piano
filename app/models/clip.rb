@@ -6,7 +6,7 @@ class Clip < ApplicationRecord
 
   # Associations
   has_many :recording_clips, dependent: :destroy
-  has_many :recordings, -> { distinct }, through: :recording_clips
+  has_many :recordings, through: :recording_clips
 
   # Validations
   validates :number, :url, presence: true, uniqueness: true

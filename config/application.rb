@@ -28,5 +28,9 @@ module JeffPiano
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.action_dispatch.default_headers.merge!({
+      'Access-Control-Allow-Origin' => '*',
+      'Access-Control-Request-Method' => '*'
+    })
   end
 end

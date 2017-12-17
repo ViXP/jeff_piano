@@ -1,6 +1,9 @@
 # Dependencies
 import React from 'react'
 import Timer from 'lib/Timer'
+import { Container } from 'flux/utils'
+import ClipsStore from 'stores/clips_store'
+import ClipsActions from 'actions/clips_actions'
 
 # Subcomponents
 import PageLoading from 'components/PageLoading'
@@ -8,30 +11,23 @@ import Video from 'components/Video'
 import ClipsButtons from 'components/ClipsButtons'
 import RecordingButton from 'components/RecordingButton'
 import RecordingForm from 'components/RecordingForm'
-import Recordings from 'components/Recordings'
+import Recordings from 'containers/Recordings'
 
-export default class @Play extends React.Component
+class Play extends React.Component
+  # Stores methods
+  @getStores = ->
+    return [ ClipsStore ]
+
+  @calculateState = ->
+    return { clips: ClipsStore.getState() }
+
   constructor: (p) ->
     super(p)
     @timer = new Timer()
-    @state = {
-      clips: {
-        collection: {
-          1: 'https://d15t3vksqnhdeh.cloudfront.net/videos/1.mp4'
-          2: 'https://d15t3vksqnhdeh.cloudfront.net/videos/2.mp4'
-          3: 'https://d15t3vksqnhdeh.cloudfront.net/videos/3.mp4'
-        }
-        loading: false
-      }
-      recordings: {
-        collection: []
-        loading: false
-      }
-    }
-    @_playback = {}
 
   componentWillMount: =>
-    @resetCurrentClip()    
+    ClipsActions.fetchClips()
+    @resetCurrentClip()
     @resetCurrentRecording()
 
   render: ->
@@ -46,8 +42,7 @@ export default class @Play extends React.Component
           record={@record} />
         <RecordingForm recording={@state.currentRecording}
           saveRecording={@saveRecording} />
-        <Recordings recordings={@state.recordings} 
-          playRecording={@playRecording} />
+        <Recordings changeCurrentClip={@changeCurrentClip} />
       </div>
       <PageLoading loading={@state.clips.loading} />
     </div>
@@ -80,7 +75,7 @@ export default class @Play extends React.Component
             ...@state.currentRecording.clips, 
             { 
               number: number, 
-              startTime: time, 
+              start_time: time, 
               url: @state.clips.collection[number]
             }
           ]
@@ -113,29 +108,10 @@ export default class @Play extends React.Component
     @resetCurrentRecording()
     @resetCurrentClip()
 
-  # Plays the sequence of clips
-  playRecording: (clips) =>
-    clearInterval(@_playback.interval) if @_playback.interval
-    clips.sort((a, b) ->
-      (a.startTime > b.startTime) ? 1 : (a.startTime == b.startTime) ? 0 : -1
-    )
-    window.clips = clips
-    @_playback = {
-      timer: 0
-      currentIndex: 0
-      interval: setInterval(@checkClip.bind(this, clips), 1)
-    }
-
-  checkClip: (clips) ->
-    if @_playback.currentIndex >= clips.length
-      clearInterval(@_playback.interval)
-    else if clips[@_playback.currentIndex].startTime == @_playback.timer
-      @setState({ currentClip: clips[@_playback.currentIndex] })
-      @_playback.currentIndex += 1
-    @_playback.timer += 1
-
   resetCurrentClip: =>
     @setState({ currentClip: null })
 
   resetCurrentRecording: =>
     @setState({ currentRecording: { id: 0, clips: [], recording: false } })
+
+export default Container.create(Play)

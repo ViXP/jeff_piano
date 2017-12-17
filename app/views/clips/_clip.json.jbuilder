@@ -1,1 +1,1 @@
-json.extract! clip, :number, :url
+json.set! clip.number, clip.url

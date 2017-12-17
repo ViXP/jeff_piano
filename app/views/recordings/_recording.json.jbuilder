@@ -1,4 +1,5 @@
 json.extract! recording, :id, :title, :created_at
-json.clips do
-  json.array! recording.recording_clips, :clip_id, :start_time  
+json.clips(recording.recording_clips) do |clip|
+  json.number clip.clip_id
+  json.start_time clip.start_time
 end
