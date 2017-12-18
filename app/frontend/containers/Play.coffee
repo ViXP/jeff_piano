@@ -4,7 +4,6 @@ import Timer from 'lib/Timer'
 import { Container } from 'flux/utils'
 import ClipsStore from 'stores/clips_store'
 import CurrentClipStore from 'stores/current_clip_store'
-
 import CurrentRecordingStore from 'stores/current_recording_store'
 import ClipsActions from 'actions/clips_actions'
 import RecordingsActions from 'actions/recordings_actions'
@@ -34,8 +33,7 @@ class Play extends React.Component
 
   componentWillMount: =>
     ClipsActions.fetchClips()
-    @resetCurrentClip()
-    @resetCurrentRecording()
+    ClipsActions.resetCurrentClip()
 
   render: ->
     <div>
@@ -59,19 +57,6 @@ class Play extends React.Component
     ClipsActions.changeCurrentClip({
       number: number, url: @state.clips.collection[number]
     })
-    @appendClipToRecording(number)
-
-  # Keyboard key press handler
-  keyPressed: (event) =>
-    number = parseInt(event.key)
-    if !isNaN(number) && number < 10 && @state.clips.collection[number]
-      @changeCurrentClip(number)
-
-  resetCurrentClip: ->
-    ClipsActions.resetCurrentClip()
-
-  # Appends current clip with correct timing
-  appendClipToRecording: (number) =>
     if @state.currentRecording.recording
       if (@state.currentRecording.clips.length == 0)
         time = 1
@@ -82,6 +67,12 @@ class Play extends React.Component
         number: number, start_time: time
       })
 
+  # Keyboard key press handler
+  keyPressed: (event) =>
+    number = parseInt(event.key)
+    if !isNaN(number) && number < 10 && @state.clips.collection[number]
+      @changeCurrentClip(number)
+
   # Operates the recording process
   record: =>
     if @state.currentRecording.recording
@@ -89,13 +80,9 @@ class Play extends React.Component
       @timer.clear()
     else
       RecordingsActions.startRecording()
-    @resetCurrentClip()
 
   # Saves the recording
   saveRecording: (title) =>
     RecordingsActions.saveRecording({title: title, ...@state.currentRecording})
-
-  resetCurrentRecording: =>
-    RecordingsActions.resetCurrentRecording()
 
 export default Container.create(Play)

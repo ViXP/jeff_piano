@@ -13,7 +13,7 @@ class CurrentClipStore extends ReduceStore
     switch action.type
       when 'CHANGE_CURRENT_CLIP'
         return action.data
-      when 'CLEAR_CURRENT_CLIP', 'SAVE_RECORDING_PENDING'
+      when 'CLEAR_CURRENT_CLIP', 'SAVE_RECORDING_PENDING', 'START_RECORDING', 'STOP_RECORDING'
         return new Object()
     return state
 

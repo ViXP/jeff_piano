@@ -17,7 +17,7 @@ class CurrentRecordingStore extends ReduceStore
         return { clips: [], recording: true }
       when 'STOP_RECORDING'
         return { ...state, recording: false }
-      when 'CLEAR_CURRENT_RECORDING', 'SAVE_RECORDING_FULLFILLED'
+      when 'CLEAR_CURRENT_RECORDING', 'SAVE_RECORDING_FULLFILLED', 'FETCH_RECORDINGS_PENDING'
         return { clips: [], recording: false }
       when 'ADD_TO_CURRENT_RECORDING'
         return {

@@ -6,15 +6,14 @@ class RecordingsController < ApplicationController
 
   def show
     recording = Recording.find_by_id(params[:id])
-    unless recording.nil?
-      render :show, locals: { recording: recording }, status: :ok
-    else
+    if recording.nil?
       head :not_found
+    else
+      render :show, locals: { recording: recording }, status: :ok
     end
   end
 
   def create
-    p recording_params
     recording = Recording.new(recording_params)
     if recording.save
       head :created
@@ -36,7 +35,9 @@ class RecordingsController < ApplicationController
   private
 
   def recording_params
-    params.require(:recording).permit(:title, recording_clips_attributes: 
-      [:number, :start_time])
+    params.require(:recording).permit(
+      :title,
+      recording_clips_attributes: [:number, :start_time]
+    )
   end
 end
