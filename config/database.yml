@@ -82,6 +82,3 @@ test: &test
 #
 production:
   <<: *default
-  database: jeffpiano_production
-  username: jeffpiano
-  password: <%= ENV['JEFFPIANO_DATABASE_PASSWORD'] %>
