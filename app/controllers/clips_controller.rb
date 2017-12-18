@@ -11,7 +11,7 @@ class ClipsController < ApplicationController
   def create
     clip = Clip.new(recording_params)
     if clip.save
-      redirect_to :root, notice: 'New clip created successfully'
+      redirect_to :statistics, notice: 'New clip created successfully'
     else
       flash[:alert] = 'Errors occured!'
       render :new, locals: { clip: clip }
