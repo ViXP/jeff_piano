@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :clips, only: [:new, :create, :destroy]
 
   # JSON API routes
-  constraints lambda {|r| r.format == :json && r.subdomain == 'api'} do
+  constraints lambda {|r| r.format == :json } do
     resources :clips, only: :index
     resources :recordings, only: [:index, :create, :show]
   end
