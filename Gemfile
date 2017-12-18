@@ -13,6 +13,7 @@ gem 'pg', '~> 0.18'
 gem 'composite_primary_keys', '~> 10.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+gem 'rack-cors', require: 'rack/cors'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'autoprefixer-rails'

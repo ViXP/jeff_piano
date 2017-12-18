@@ -53,10 +53,10 @@ class Recordings extends React.Component
     @_playback = {
       timer: 0
       currentIndex: 0
-      interval: setInterval(@checkClip.bind(this, clips), 1)
+      interval: setInterval(@checkTime.bind(this, clips), 1)
     }
 
-  checkClip: (clips) ->
+  checkTime: (clips) ->
     if @_playback.currentIndex >= clips.length
       clearInterval(@_playback.interval)
     else if clips[@_playback.currentIndex].start_time == @_playback.timer

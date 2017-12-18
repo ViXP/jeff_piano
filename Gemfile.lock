@@ -119,6 +119,7 @@ GEM
       pry (>= 0.10.4)
     puma (3.11.0)
     rack (2.0.3)
+    rack-cors (1.0.2)
     rack-proxy (0.6.3)
       rack
     rack-test (0.8.2)
@@ -226,6 +227,7 @@ DEPENDENCIES
   pry
   pry-rails
   puma (~> 3.7)
+  rack-cors
   rails (~> 5.1.4)
   react-rails
   sass-rails (~> 5.0)

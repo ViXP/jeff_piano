@@ -5,7 +5,9 @@ import PropTypes from "prop-types"
 export default class Recording extends React.Component
   @propTypes = 
     recording: PropTypes.shape(
-      id: PropTypes.number
+      id: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number])
       title: PropTypes.string.isRequired
       clips: PropTypes.array.isRequired
     ).isRequired

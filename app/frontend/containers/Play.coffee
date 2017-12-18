@@ -3,7 +3,11 @@ import React from 'react'
 import Timer from 'lib/Timer'
 import { Container } from 'flux/utils'
 import ClipsStore from 'stores/clips_store'
+import CurrentClipStore from 'stores/current_clip_store'
+
+import CurrentRecordingStore from 'stores/current_recording_store'
 import ClipsActions from 'actions/clips_actions'
+import RecordingsActions from 'actions/recordings_actions'
 
 # Subcomponents
 import PageLoading from 'components/PageLoading'
@@ -16,10 +20,13 @@ import Recordings from 'containers/Recordings'
 class Play extends React.Component
   # Stores methods
   @getStores = ->
-    return [ ClipsStore ]
+    return [ ClipsStore, CurrentClipStore, CurrentRecordingStore ]
 
   @calculateState = ->
-    return { clips: ClipsStore.getState() }
+    return
+      clips: ClipsStore.getState()
+      currentClip: CurrentClipStore.getState()
+      currentRecording: CurrentRecordingStore.getState()
 
   constructor: (p) ->
     super(p)
@@ -49,8 +56,8 @@ class Play extends React.Component
 
   # Changes current clip
   changeCurrentClip: (number) =>
-    @setState({
-      currentClip: { number: number, url: @state.clips.collection[number] }
+    ClipsActions.changeCurrentClip({
+      number: number, url: @state.clips.collection[number]
     })
     @appendClipToRecording(number)
 
@@ -60,58 +67,35 @@ class Play extends React.Component
     if !isNaN(number) && number < 10 && @state.clips.collection[number]
       @changeCurrentClip(number)
 
+  resetCurrentClip: ->
+    ClipsActions.resetCurrentClip()
+
   # Appends current clip with correct timing
   appendClipToRecording: (number) =>
     if @state.currentRecording.recording
       if (@state.currentRecording.clips.length == 0)
-        time = 0
+        time = 1
         @timer.start()
       else
         time = @timer.display()
-      @setState({
-        currentRecording: {
-          ...@state.currentRecording,
-          clips: [
-            ...@state.currentRecording.clips, 
-            { 
-              number: number, 
-              start_time: time, 
-              url: @state.clips.collection[number]
-            }
-          ]
-        }
+      RecordingsActions.addClipToCurrentRecording({ 
+        number: number, start_time: time
       })
 
   # Operates the recording process
   record: =>
     if @state.currentRecording.recording
-      @setState({ 
-        currentRecording: { ...@state.currentRecording, recording: false } 
-      })
+      RecordingsActions.stopRecording()
       @timer.clear()
-      # AND SAVE TO THE LOCAL STORAGE!
     else
-      @setState({ currentRecording: { recording: true, clips: [] } })
+      RecordingsActions.startRecording()
     @resetCurrentClip()
 
   # Saves the recording
   saveRecording: (title) =>
-    @setState({
-      recordings: {
-        ...@state.recordings
-        collection: [
-          { ...@state.currentRecording, title: title, id: 0 }
-          ...@state.recordings.collection
-        ]
-      }
-    })
-    @resetCurrentRecording()
-    @resetCurrentClip()
-
-  resetCurrentClip: =>
-    @setState({ currentClip: null })
+    RecordingsActions.saveRecording({title: title, ...@state.currentRecording})
 
   resetCurrentRecording: =>
-    @setState({ currentRecording: { id: 0, clips: [], recording: false } })
+    RecordingsActions.resetCurrentRecording()
 
 export default Container.create(Play)

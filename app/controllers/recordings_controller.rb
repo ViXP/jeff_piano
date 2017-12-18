@@ -14,9 +14,10 @@ class RecordingsController < ApplicationController
   end
 
   def create
+    p recording_params
     recording = Recording.new(recording_params)
     if recording.save
-      render :show, locals: { recording: recording }, status: :created
+      head :created
     else
       render json: recording.errors, status: :unprocessable_entity
     end
@@ -35,6 +36,7 @@ class RecordingsController < ApplicationController
   private
 
   def recording_params
-    params.require(:recording).permit(:title, :clips)
+    params.require(:recording).permit(:title, recording_clips_attributes: 
+      [:number, :start_time])
   end
 end

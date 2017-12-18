@@ -12,4 +12,8 @@ class RecordingClip < ApplicationRecord
 
   # Scopes
   default_scope { order(start_time: :asc) }
+
+  def number= number
+    self.clip_id = number 
+  end
 end
