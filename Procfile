@@ -1,3 +1,2 @@
-# Developer environment procfile
-web: rails s -p $PORT
-webpacker: ./bin/webpack-dev-server
+web: bundle exec rails server -p $PORT
+webpacker: bundle exec bin/webpack-dev-server
