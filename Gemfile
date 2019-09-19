@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.2'
+ruby '2.7.0'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -7,10 +7,11 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 6.0'
+gem 'bootsnap'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
-gem 'composite_primary_keys', '~> 10.0'
+gem 'composite_primary_keys'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 gem 'rack-cors', require: 'rack/cors'
@@ -25,8 +26,6 @@ gem 'react-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'haml-rails'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 gem 'js-routes', git: 'https://github.com/ViXP/js-routes'
