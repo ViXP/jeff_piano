@@ -13,7 +13,7 @@ gem 'bootsnap'
 gem 'pg', '~> 0.18'
 gem 'composite_primary_keys'
 # Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 gem 'rack-cors', require: 'rack/cors'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
